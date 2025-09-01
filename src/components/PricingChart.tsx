@@ -9,7 +9,7 @@ interface PricingChartProps {
 const PricingChart: React.FC<PricingChartProps> = ({ data, providerColors }) => {
   if (data.length === 0) {
     return (
-      <div className="h-64 flex items-center justify-center text-gray-500 dark:text-gray-400">
+      <div className="h-64 flex items-center justify-center text-gray-400">
         No pricing data available for the selected filters
       </div>
     );
@@ -26,7 +26,7 @@ const PricingChart: React.FC<PricingChartProps> = ({ data, providerColors }) => 
         
         return (
           <div key={index} className="flex flex-col items-center">
-            <div className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-2">
+            <div className="text-xs font-medium text-gray-400 mb-2">
               ${item.price.toFixed(3)}
             </div>
             <div
@@ -37,10 +37,10 @@ const PricingChart: React.FC<PricingChartProps> = ({ data, providerColors }) => 
               }}
             ></div>
             <div className="mt-3 text-center">
-              <div className="text-sm font-medium text-gray-900 dark:text-white">
+              <div className="text-sm font-medium text-white">
                 {item.provider.toUpperCase()}
               </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">
+              <div className="text-xs text-gray-400">
                 {item.instanceType}
               </div>
             </div>
