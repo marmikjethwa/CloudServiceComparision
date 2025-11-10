@@ -11,11 +11,12 @@ interface NavigationProps {
   tabs: Tab[];
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  isDark: boolean;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ tabs, activeTab, setActiveTab }) => {
+const Navigation: React.FC<NavigationProps> = ({ tabs, activeTab, setActiveTab, isDark }) => {
   return (
-    <nav className="border-b border-gray-700 bg-gray-800">
+    <nav className={`border-b ${isDark ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'}`}>
       <div className="container mx-auto px-4">
         <div className="flex space-x-8">
           {tabs.map((tab) => {
@@ -27,7 +28,7 @@ const Navigation: React.FC<NavigationProps> = ({ tabs, activeTab, setActiveTab }
                 className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
                   activeTab === tab.id
                     ? 'border-blue-500 text-blue-400'
-                    : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-600'
+                    : isDark ? 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-600' : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
                 }`}
               >
                 <Icon className="h-4 w-4" />

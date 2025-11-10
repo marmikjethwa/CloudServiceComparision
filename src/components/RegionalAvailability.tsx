@@ -5,9 +5,10 @@ import { mockRegions } from '../data/mockData';
 
 interface RegionalAvailabilityProps {
   selectedProviders: ServiceProvider[];
+  isDark: boolean;
 }
 
-const RegionalAvailability: React.FC<RegionalAvailabilityProps> = ({ selectedProviders }) => {
+const RegionalAvailability: React.FC<RegionalAvailabilityProps> = ({ selectedProviders, isDark }) => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
   const filteredRegions = mockRegions.filter(region =>
@@ -41,35 +42,34 @@ const RegionalAvailability: React.FC<RegionalAvailabilityProps> = ({ selectedPro
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Regional Availability</h2>
-          <p className="text-gray-400 mt-1">
+          <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>Regional Availability</h2>
+          <p className={`mt-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
             Explore data centers and service availability by region
           </p>
         </div>
       </div>
 
-      {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {selectedProviders.map(provider => (
           <div
             key={provider}
-            className={`bg-gray-800 rounded-xl border-2 p-6 ${providerColors[provider]}`}
+            className={`rounded-xl border-2 p-6 ${providerColors[provider]} ${isDark ? 'bg-gray-800' : 'bg-white'}`}
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-white">{providerNames[provider]}</h3>
-              <Globe className="h-5 w-5 text-gray-400" />
+              <h3 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{providerNames[provider]}</h3>
+              <Globe className={`h-5 w-5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
             </div>
 
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-400">Regions:</span>
-                <span className="font-medium text-white">
+                <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Regions:</span>
+                <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   {regionsByProvider[provider]?.length || 0}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-400">Services:</span>
-                <span className="font-medium text-white">
+                <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Services:</span>
+                <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   {regionsByProvider[provider]?.reduce(
                     (total, region) => total + region.services.length,
                     0
@@ -81,12 +81,13 @@ const RegionalAvailability: React.FC<RegionalAvailabilityProps> = ({ selectedPro
         ))}
       </div>
 
-      {/* Regions List */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredRegions.map(region => (
           <div
             key={region.id}
-            className={`bg-gray-800 rounded-xl border border-gray-700 p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer ${
+            className={`rounded-xl border p-6 hover:shadow-md transition-shadow duration-200 cursor-pointer ${
+              isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+            } ${
               selectedRegion === region.id ? 'ring-2 ring-blue-500' : ''
             }`}
             onClick={() =>
@@ -95,10 +96,10 @@ const RegionalAvailability: React.FC<RegionalAvailabilityProps> = ({ selectedPro
           >
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h4 className="font-semibold text-white">{region.name}</h4>
+                <h4 className={`font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>{region.name}</h4>
                 <div className="flex items-center space-x-1 mt-1">
-                  <MapPin className="h-3 w-3 text-gray-400" />
-                  <span className="text-sm text-gray-400">{region.location}</span>
+                  <MapPin className={`h-3 w-3 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
+                  <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{region.location}</span>
                 </div>
               </div>
 
@@ -112,22 +113,22 @@ const RegionalAvailability: React.FC<RegionalAvailabilityProps> = ({ selectedPro
             </div>
 
             <div className="flex items-center space-x-2 mb-3">
-              <Server className="h-4 w-4 text-gray-400" />
-              <span className="text-sm font-medium text-gray-300">
+              <Server className={`h-4 w-4 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} />
+              <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                 {region.services.length} Services Available
               </span>
             </div>
 
             {selectedRegion === region.id && (
-              <div className="border-t border-gray-600 pt-4 mt-4">
-                <h5 className="text-sm font-medium text-gray-300 mb-2">
+              <div className={`border-t pt-4 mt-4 ${isDark ? 'border-gray-600' : 'border-gray-200'}`}>
+                <h5 className={`text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                   Available Services:
                 </h5>
                 <div className="grid grid-cols-2 gap-1 text-xs">
                   {region.services.map((service, index) => (
                     <span
                       key={index}
-                      className="text-gray-400 bg-gray-700 px-2 py-1 rounded"
+                      className={`px-2 py-1 rounded ${isDark ? 'text-gray-400 bg-gray-700' : 'text-gray-700 bg-gray-100'}`}
                     >
                       {service}
                     </span>
@@ -141,11 +142,11 @@ const RegionalAvailability: React.FC<RegionalAvailabilityProps> = ({ selectedPro
 
       {filteredRegions.length === 0 && (
         <div className="text-center py-12">
-          <div className="text-gray-500 mb-4">
+          <div className={`mb-4 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
             <Globe className="h-16 w-16 mx-auto opacity-50" />
           </div>
-          <h3 className="text-lg font-medium text-white mb-2">No regions found</h3>
-          <p className="text-gray-400">
+          <h3 className={`text-lg font-medium mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>No regions found</h3>
+          <p className={isDark ? 'text-gray-400' : 'text-gray-600'}>
             Select at least one provider to view regional availability
           </p>
         </div>

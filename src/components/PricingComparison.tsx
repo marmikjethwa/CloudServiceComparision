@@ -7,9 +7,10 @@ import PricingCalculator from './PricingCalculator';
 
 interface PricingComparisonProps {
   selectedProviders: ServiceProvider[];
+  isDark: boolean;
 }
 
-const PricingComparison: React.FC<PricingComparisonProps> = ({ selectedProviders }) => {
+const PricingComparison: React.FC<PricingComparisonProps> = ({ selectedProviders, isDark }) => {
   const [selectedService, setSelectedService] = useState('compute');
   const [selectedRegion, setSelectedRegion] = useState('us-east-1');
 
@@ -34,24 +35,24 @@ const PricingComparison: React.FC<PricingComparisonProps> = ({ selectedProviders
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white">Pricing Comparison</h2>
-          <p className="text-gray-400 mt-1">
+          <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>Pricing Comparison</h2>
+          <p className={`mt-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
             Compare costs across different services and regions
           </p>
         </div>
       </div>
 
       {/* Controls */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
+      <div className={`rounded-xl border p-6 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
               Service Type
             </label>
             <select
               value={selectedService}
               onChange={(e) => setSelectedService(e.target.value)}
-              className="w-full rounded-lg border border-gray-600 bg-gray-700 px-3 py-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={`w-full rounded-lg border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'border-gray-600 bg-gray-700 text-white' : 'border-gray-300 bg-white text-gray-900'}`}
             >
               {services.map(service => (
                 <option key={service} value={service}>
@@ -62,13 +63,13 @@ const PricingComparison: React.FC<PricingComparisonProps> = ({ selectedProviders
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
               Region
             </label>
             <select
               value={selectedRegion}
               onChange={(e) => setSelectedRegion(e.target.value)}
-              className="w-full rounded-lg border border-gray-600 bg-gray-700 px-3 py-2 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={`w-full rounded-lg border px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDark ? 'border-gray-600 bg-gray-700 text-white' : 'border-gray-300 bg-white text-gray-900'}`}
             >
               {regions.map(region => (
                 <option key={region} value={region}>
@@ -81,63 +82,63 @@ const PricingComparison: React.FC<PricingComparisonProps> = ({ selectedProviders
       </div>
 
       {/* Pricing Chart */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
+      <div className={`rounded-xl border p-6 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
         <div className="flex items-center space-x-2 mb-6">
           <BarChart3 className="h-5 w-5 text-blue-400" />
-          <h3 className="text-lg font-semibold text-white">Price Comparison</h3>
+          <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Price Comparison</h3>
         </div>
         
         <PricingChart data={filteredPricingData} providerColors={providerColors} />
       </div>
 
       {/* Pricing Table */}
-      <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
-        <div className="p-6 border-b border-gray-700">
+      <div className={`rounded-xl border overflow-hidden ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+        <div className={`p-6 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
           <div className="flex items-center space-x-2">
             <TrendingUp className="h-5 w-5 text-green-400" />
-            <h3 className="text-lg font-semibold text-white">Detailed Pricing</h3>
+            <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Detailed Pricing</h3>
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-700">
+            <thead className={isDark ? 'bg-gray-700' : 'bg-gray-100'}>
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                   Provider
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                   Instance Type
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                   Price/Hour
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                   Monthly Cost
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-700">
+            <tbody className={`divide-y ${isDark ? 'divide-gray-700' : 'divide-gray-200'}`}>
               {filteredPricingData.map((item, index) => (
-                <tr key={index} className="hover:bg-gray-700">
+                <tr key={index} className={isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-50'}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div
                         className="w-3 h-3 rounded-full mr-3"
                         style={{ backgroundColor: providerColors[item.provider] }}
                       ></div>
-                      <span className="font-medium text-white">
+                      <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                         {item.provider.toUpperCase()}
                       </span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-white">
+                  <td className={`px-6 py-4 whitespace-nowrap ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {item.instanceType}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-white">
+                  <td className={`px-6 py-4 whitespace-nowrap ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     ${item.price.toFixed(3)}/{item.unit}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-white">
+                  <td className={`px-6 py-4 whitespace-nowrap font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     ${(item.price * 24 * 30).toFixed(2)}
                   </td>
                 </tr>
@@ -148,7 +149,7 @@ const PricingComparison: React.FC<PricingComparisonProps> = ({ selectedProviders
       </div>
 
       {/* Cost Calculator */}
-      <PricingCalculator selectedProviders={selectedProviders} />
+      <PricingCalculator selectedProviders={selectedProviders} isDark={isDark} />
     </div>
   );
 };
