@@ -9,7 +9,7 @@ interface PricingChartProps {
 const PricingChart: React.FC<PricingChartProps> = ({ data, providerColors }) => {
   if (data.length === 0) {
     return (
-      <div className="h-64 flex items-center justify-center text-gray-400">
+      <div className="h-64 flex items-center justify-center text-gray-500">
         No pricing data available for the selected filters
       </div>
     );
@@ -20,27 +20,32 @@ const PricingChart: React.FC<PricingChartProps> = ({ data, providerColors }) => 
   const priceRange = maxPrice - minPrice;
 
   return (
-    <div className="h-64 flex items-end justify-center space-x-8">
+    <div className="h-64 flex items-end justify-center space-x-8 bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
       {data.map((item, index) => {
         const height = priceRange > 0 ? ((item.price - minPrice) / priceRange) * 200 + 40 : 100;
-        
+
         return (
           <div key={index} className="flex flex-col items-center">
-            <div className="text-xs font-medium text-gray-400 mb-2">
+            {/* Price Label */}
+            <div className="text-xs font-medium text-gray-600 mb-2">
               ${item.price.toFixed(3)}
             </div>
+
+            {/* Bar */}
             <div
-              className="w-16 rounded-t-lg transition-all duration-500 hover:opacity-80"
+              className="w-16 rounded-t-lg transition-all duration-500 hover:opacity-90 shadow-sm"
               style={{
                 height: `${height}px`,
-                backgroundColor: providerColors[item.provider]
+                backgroundColor: providerColors[item.provider],
               }}
             ></div>
+
+            {/* Provider Info */}
             <div className="mt-3 text-center">
-              <div className="text-sm font-medium text-white">
+              <div className="text-sm font-semibold text-gray-800">
                 {item.provider.toUpperCase()}
               </div>
-              <div className="text-xs text-gray-400">
+              <div className="text-xs text-gray-500">
                 {item.instanceType}
               </div>
             </div>
