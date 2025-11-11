@@ -88,7 +88,7 @@ const PricingComparison: React.FC<PricingComparisonProps> = ({ selectedProviders
           <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Price Comparison</h3>
         </div>
         
-        <PricingChart data={filteredPricingData} providerColors={providerColors} />
+        <PricingChart data={filteredPricingData} providerColors={providerColors} isDark={isDark} />
       </div>
 
       {/* Pricing Table */}

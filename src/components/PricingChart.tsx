@@ -4,12 +4,13 @@ import { PricingData } from '../types';
 interface PricingChartProps {
   data: PricingData[];
   providerColors: { [key: string]: string };
+  isDark?: boolean;
 }
 
-const PricingChart: React.FC<PricingChartProps> = ({ data, providerColors }) => {
+const PricingChart: React.FC<PricingChartProps> = ({ data, providerColors, isDark = true }) => {
   if (data.length === 0) {
     return (
-      <div className="h-64 flex items-center justify-center text-gray-400">
+      <div className={`h-64 flex items-center justify-center ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
         No pricing data available for the selected filters
       </div>
     );
@@ -26,7 +27,7 @@ const PricingChart: React.FC<PricingChartProps> = ({ data, providerColors }) => 
         
         return (
           <div key={index} className="flex flex-col items-center">
-            <div className="text-xs font-medium text-gray-400 mb-2">
+            <div className={`text-xs font-medium mb-2 ${isDark ? 'text-gray-400' : 'text-black'}`}>
               ${item.price.toFixed(3)}
             </div>
             <div
@@ -37,10 +38,10 @@ const PricingChart: React.FC<PricingChartProps> = ({ data, providerColors }) => 
               }}
             ></div>
             <div className="mt-3 text-center">
-              <div className="text-sm font-medium text-white">
+              <div className={`text-sm font-medium ${isDark ? 'text-white' : 'text-black'}`}>
                 {item.provider.toUpperCase()}
               </div>
-              <div className="text-xs text-gray-400">
+              <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-black'}`}>
                 {item.instanceType}
               </div>
             </div>
